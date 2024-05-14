@@ -1,6 +1,8 @@
 
 const express = require('express');
 const mysql = require('mysql');
+const cors = require('cors');
+const bodyParser = require('body-parser'); // Import body-parser
 
 const app = express();
 const port = 3000;
@@ -20,6 +22,9 @@ connection.connect((err) => {
 });
 
 app.use(express.static('public'));
+app.use(bodyParser.json()); // Use body-parser middleware to parse JSON request bodies
+app.use(cors());
+
 app.post('/register', (req, res) => {
     const { email, password } = req.body;
     const sql = 'INSERT INTO users (email, password) VALUES (?, ?)';
